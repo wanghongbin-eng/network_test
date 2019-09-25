@@ -13,6 +13,12 @@ int main(int argc, char **argv)
 {
 	int sock_fd = 0;
 
+	if(argc != 2)
+	{
+		printf("input port\n");
+		exit(0);
+	}
+
 	if((sock_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		printf("socket error\n");
