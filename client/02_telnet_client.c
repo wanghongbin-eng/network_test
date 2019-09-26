@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#define BUF_SIZE 1024
+
 int tcp_socket_cli(in_addr_t ip_addr, int port)
 {
 	int sock_fd = 0;
@@ -40,7 +42,7 @@ int main(int argc, char **argv)
 	
 	sock_fd = tcp_socket_cli(inet_addr(argv[1]), atoi(argv[2]));
 
-	char recv_buf[1024] = {0}, send_buf[1024] = {0};
+	char recv_buf[BUF_SIZE] = {0}, send_buf[BUF_SIZE] = {0};
 	int n = 0;
 	size_t rt = 0;
 
@@ -64,7 +66,7 @@ int main(int argc, char **argv)
 		printf("select ok \n");
 		if(FD_ISSET(sock_fd, &readmask))
 		{
-			n = read(sock_fd, recv_buf, 1024);
+			n = read(sock_fd, recv_buf, BUF_SIZE);
 			if(n < 0)
 			{
 				printf("read error\n");
@@ -80,7 +82,7 @@ int main(int argc, char **argv)
 
 		if(FD_ISSET(STDIN_FILENO, &readmask))
 		{
-			if(fgets(send_buf, 1024, stdin) != NULL)
+			if(fgets(send_buf, BUF_SIZE, stdin) != NULL)
 			{
 				rt = write(sock_fd, send_buf, strlen(send_buf));
 				if(rt < 0)
