@@ -66,6 +66,7 @@ int main(int argc, char **argv)
 		printf("select ok \n");
 		if(FD_ISSET(sock_fd, &readmask))
 		{
+			memset(&recv_buf, 0, sizeof(recv_buf));
 			n = read(sock_fd, recv_buf, BUF_SIZE);
 			if(n < 0)
 			{
