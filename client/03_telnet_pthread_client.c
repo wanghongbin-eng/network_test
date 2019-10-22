@@ -40,7 +40,7 @@ void *thread_run(void *arg)
 		printf("connect error\n");
 		exit(0);
 	}
-	printf("cc\n");
+	printf("thread %lu\n", pthread_self());
 	char recvbuf[16];
 	while(1)
 	{
@@ -50,7 +50,7 @@ void *thread_run(void *arg)
 		sleep(1);
 		recv(sock_fd, recvbuf, sizeof(recvbuf), 0);
 		sleep(5);
-		printf("send %s recv %s\n", addr->buf, recvbuf);
+		printf("thread %lu: send %s recv %s\n", pthread_self(), addr->buf, recvbuf);
 		
 	}
 	close(sock_fd);
